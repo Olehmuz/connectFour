@@ -1,0 +1,1 @@
+web: ./build/install/ktor-simpleGETPOST/bin/ktor-simpleGETPOST
