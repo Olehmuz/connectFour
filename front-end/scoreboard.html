@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Two-player Connect Four</title>
+	<meta name="description"
+		content="Play two-player Connect Four online. To win, be the first to form a horizontal, vertical, or diagonal line with four of your discs.">
+
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link href="https://fonts.googleapis.com/css?family=Nunito:400,700" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="css/main.css">
+	<style>
+		table {
+			border-collapse: collapse;
+			margin: 25px 0;
+			font-size: 0.9em;
+			font-family: sans-serif;
+			min-width: 400px;
+			box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+		}
+
+		table thead tr {
+			background-color: #009879;
+			color: #ffffff;
+			text-align: left;
+		}
+
+		table th,
+		table td {
+			padding: 12px 15px;
+		}
+
+		table tbody tr {
+			border-bottom: 1px solid #dddddd;
+		}
+
+		table tbody tr:nth-of-type(even) {
+			background-color: #f3f3f3;
+		}
+
+		table tbody tr:last-of-type {
+			border-bottom: 2px solid #009879;
+		}
+
+		table tbody tr.active-row {
+			font-weight: bold;
+			color: #009879;
+		}
+	</style>
+</head>
+<body>
+	<section class="wrapper">
+		<table id="table">
+			<thead id="thead">
+				<th>Ім'я</th>
+				<th>Кількість перемог</th>
+			</thead>
+			<tbody id="tbody">
+			</tbody>
+		</table>
+
+	</section>
+
+	<script>
+
+		fetch(`https://ktor-simplegetpost.herokuapp.com/all`, {
+			method: 'GET'
+		})
+			.then(response => response.json())
+			.then(data => {
+				const tableBody = document.getElementById('tbody');
+				data.map(({ name, wins }) => {
+					const tr = document.createElement('tr');
+					const tdWins = document.createElement('td')
+					tdWins.innerText = wins;
+					const tdName = document.createElement('td')
+					tdName.innerText = name;
+					tr.appendChild(tdName);
+					tr.appendChild(tdWins);
+					tableBody.appendChild(tr);
+				})
+			})
+			.catch(error => console.error(error));
+
+	</script>
+</body>
+</html>
